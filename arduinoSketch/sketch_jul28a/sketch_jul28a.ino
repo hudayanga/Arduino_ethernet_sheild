@@ -7,7 +7,7 @@
   
   unsigned long lastConnectionTime = 0;          // last time you connected to the server, in milliseconds
 boolean lastConnected = false;                 // state of the connection last time through the main loop
-const unsigned long postingInterval = 1000;  // delay between updates, in milliseconds
+const unsigned long postingInterval = 10000;  // delay between updates, in milliseconds
 
 
     EthernetClient client;
@@ -23,10 +23,11 @@ void loop() {
   // if there's incoming data from the net connection.
   // send it out the serial port.  This is for debugging
   // purposes only:
-  if (client.available()) {
+ if (client.available()) {
     char c = client.read();
-    Serial.print(c);
+    //Serial.print(c);
   }
+  
 
   // if there's no net connection, but there was one last time
   // through the loop, then stop the client:
@@ -50,10 +51,17 @@ void httpRequest() {
   // if there's a successful connection:
    
     int sensorValue = analogRead(A0);
-    Serial.println(sensorValue);
+     int sensorValue2 = analogRead(A1);
     
-    String temp= "temp=";
-    temp += sensorValue;
+    float voltage = sensorValue * (5.0 / 1023.0);
+    float voltage2 = sensorValue2 * (5.0 / 1023.0);
+    
+    Serial.println(voltage);
+    Serial.println(voltage2);
+    
+    String temp= "String(voltage)";
+    String temp2= "String(voltage2)";
+    //temp =String(voltage);
       
 
     Serial.println("connecting...");
